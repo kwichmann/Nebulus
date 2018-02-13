@@ -11,9 +11,9 @@ let dAngle = 0;
 const tiles = 26;
 const tileHeight = 30;
 const towerRadius = 200;
-const towerHeight = 20;
+const towerHeight = 15;
 const seaDepth = 50;
-const numStars = 400;
+const numStars = 600;
 
 function setup() {
   createCanvas(800, 600);
@@ -36,7 +36,7 @@ function draw() {
   translate(0, -yView);
 
   // Draw the stars
-  let xOffset = map(towerAngle % TWO_PI, 0, TWO_PI, 0, width);
+  let xOffset = map(towerAngle % TWO_PI, -TWO_PI, 0, 0, 2 * width);
   for (let i = 0; i < numStars; i++) {
     stroke(starsBright[i]);
     point((starsPos[i].x + xOffset) % (2 * width), starsPos[i].y)
@@ -73,7 +73,6 @@ function draw() {
 
   topColor += 2;
   seaPhase += 0.01;
-
 }
 
 function drawTiles(angle0, angle1, yOffset) {
