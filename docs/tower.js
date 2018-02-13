@@ -5,11 +5,14 @@ let seaPhase;
 let starsPos = [];
 let starsBright = [];
 
+let dy = 0;
+let dAngle = 0;
+
 const tiles = 26;
 const tileHeight = 30;
 const towerRadius = 200;
-const towerHeight = 10;
-const seaDepth = 100;
+const towerHeight = 20;
+const seaDepth = 50;
 const numStars = 400;
 
 function setup() {
@@ -62,13 +65,15 @@ function draw() {
 
   // Draw the water
   fill(100, 100, 255);
-  rect(0, 2 * tileHeight * (towerHeight - 1) + sin(seaPhase) * 0.5 * tileHeight, width, seaDepth + 2 * tileHeight);
+  rect(0, 2 * tileHeight * (towerHeight - 1) + sin(seaPhase) * 0.5 * tileHeight, width, seaDepth + 3 * tileHeight);
   pop();
 
-  towerAngle += 0.005;
+  yView = constrain(yView + dy, -0.5 * height, 2 * tileHeight * towerHeight + seaDepth - height);
+  towerAngle += dAngle;
+
   topColor += 2;
   seaPhase += 0.01;
-  yView -= 1;
+
 }
 
 function drawTiles(angle0, angle1, yOffset) {
@@ -87,5 +92,29 @@ function drawTiles(angle0, angle1, yOffset) {
   }
   for (let i = 0; i < towerHeight; i++) {
     rect(min(x0, x1) + width * 0.5, i * tileHeight * 2 + yOffset, abs(x1 - x0), tileHeight);
+  }
+}
+
+function keyPressed() {
+  if (keyCode == UP_ARROW) {
+    dy = -1;
+  }
+  if (keyCode == DOWN_ARROW) {
+    dy = 1;
+  }
+  if (keyCode == LEFT_ARROW) {
+    dAngle = 0.005;
+  }
+  if (keyCode == RIGHT_ARROW) {
+    dAngle = -0.005;
+  }
+}
+
+function keyReleased() {
+  if (keyCode != LEFT_ARROW & keyCode != RIGHT_ARROW) {
+    dy = 0;
+  }
+  if (keyCode != UP_ARROW & keyCode != DOWN_ARROW) {
+    dAngle = 0;
   }
 }
